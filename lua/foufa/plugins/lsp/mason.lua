@@ -40,6 +40,7 @@ return {
 				"rust_analyzer",
 				"bashls",
 				"lexical",
+				"erlangls",
 			},
 			-- auto-install configured servers (with lspconfig)
 			automatic_installation = true, -- not the same as ensure_installed

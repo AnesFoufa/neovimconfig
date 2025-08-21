@@ -97,11 +97,11 @@ return {
 			map("n", "<leader>d", vim.diagnostic.setloclist)
 
 			map("n", "[c", function()
-				vim.diagnostic.goto_prev({ wrap = false })
+				vim.diagnostic.jump({ count = -1, wrap = false })
 			end)
 
 			map("n", "]c", function()
-				vim.diagnostic.goto_next({ wrap = false })
+				vim.diagnostic.jump({ count = 1, wrap = false })
 			end)
 
 			-- Example mappings for usage with nvim-dap. If you don't use that, you can
