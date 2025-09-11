@@ -53,6 +53,7 @@ return {
 			"heex",
 			"eex",
 			"erlang",
+			"gleam",
 			"elixir",
 			"html",
 			"bash",
