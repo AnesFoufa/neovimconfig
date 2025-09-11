@@ -1,0 +1,4 @@
+# Local LazyVim state and plugin overrides
+lazyvim.json
+lua/plugins/
+plugin/
