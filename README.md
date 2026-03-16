@@ -1,6 +1,6 @@
 # Neovim Configuration
 
-A modern, feature-rich Neovim configuration optimized for polyglot development with strong support for web development, systems programming, and functional languages.
+A personal Neovim configuration for polyglot development with LSP, Treesitter, Telescope, Mason, and language-specific tooling for web, systems, and functional languages.
 
 ## Features
 
@@ -14,11 +14,17 @@ A modern, feature-rich Neovim configuration optimized for polyglot development w
 
 ## Prerequisites
 
-- **Neovim**: Version 0.8+ required
-- **Git**: For plugin management and repository operations
-- **Node.js**: Required for TypeScript/JavaScript LSP servers
-- **Ripgrep**: For fast text searching (install via `brew install ripgrep`)
-- **A Nerd Font**: For proper icon display in file explorer and completion menu
+- **Neovim**: modern release with built-in LSP support
+- **Git**: for plugin management and repository operations
+- **Node.js**: required for TypeScript/JavaScript-related tooling
+- **Ripgrep**: used by Telescope for live grep
+- **A Nerd Font**: for file explorer and completion icons
+
+Optional but useful:
+
+- **fd**: improves Telescope file-finding
+- **shellcheck**: enables better Bash diagnostics
+- language runtimes/toolchains required by your LSPs, for example Go for `gopls`, Erlang/Rebar for `erlangls`, and Elixir for `elixirls`
 
 ## Installation
 
@@ -39,7 +45,7 @@ A modern, feature-rich Neovim configuration optimized for polyglot development w
 
 4. **Wait for plugins to install**: Lazy.nvim will automatically download and install all plugins on first launch.
 
-5. **Install language servers**: Mason will automatically install configured LSP servers when you first open supported file types.
+5. **Install language servers**: Mason manages the configured servers. Open `:Mason` to inspect or install anything missing.
 
 ## Project Structure
 
@@ -91,7 +97,9 @@ A modern, feature-rich Neovim configuration optimized for polyglot development w
 
 ### LSP Features
 - `gd` - Go to definition
+- `gD` - Go to declaration
 - `gi` - Go to implementation
+- `gt` - Go to type definition
 - `gR` - Show references
 - `K` - Hover documentation
 - `<leader>ca` - Code actions
@@ -128,13 +136,26 @@ A modern, feature-rich Neovim configuration optimized for polyglot development w
 ### Functional Programming
 - **Haskell**: Advanced tooling via haskell-tools.nvim
 - **OCaml**: Native OCaml development support
-- **Elixir**: Full support via Lexical language server
+- **Elixir**: Full support via `elixirls`
+- **Gleam**: LSP support with format-on-save via Gleam
+- **Erlang**: LSP support via `erlangls`
 
 ### Scripting & Others
 - **Python**: Complete Python development with pyright
 - **Lua**: Enhanced Lua support for Neovim configuration
 - **Bash**: Shell scripting support
 - **Prisma**: Database schema support
+
+## Formatting
+
+- Go files format on save through `gopls`
+- Gleam files format on save through the Gleam LSP
+- `none-ls` handles configured external formatters such as `stylua`, `black`, `prettier`, `clang-format`, `ocamlformat`, `mix`, and `shfmt`
+
+## Notes
+
+- LSP keymaps are attached buffer-locally when a server connects, so commands like `<leader>ca` and `<leader>rn` require an active LSP client in the current buffer.
+- Elixir is configured through Mason-managed `elixirls`, launched from Neovim's data directory.
 
 ## Customization
 
@@ -178,6 +199,7 @@ Uses [Mason.nvim](https://github.com/williamboman/mason.nvim) for automatic LSP 
 - Verify language server installation with `:Mason`
 - Check LSP status with `:LspInfo`
 - Restart LSP with `<leader>rs`
+- Check `:messages` and `~/.local/state/nvim/lsp.log` for server startup failures
 
 ### Performance Issues
 - Check startup time with `nvim --startuptime startup.log`
