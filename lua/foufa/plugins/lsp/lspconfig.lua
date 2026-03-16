@@ -86,6 +86,23 @@ return {
 					end,
 				})
 			end
+
+			if client.name == "gleam" and client:supports_method("textDocument/formatting") then
+				local augroup = vim.api.nvim_create_augroup("GleamLspFormatting", {})
+				vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+				vim.api.nvim_create_autocmd("BufWritePre", {
+					group = augroup,
+					buffer = bufnr,
+					callback = function()
+						vim.lsp.buf.format({
+							bufnr = bufnr,
+							filter = function(format_client)
+								return format_client.name == "gleam"
+							end,
+						})
+					end,
+				})
+			end
 		end
 
 		-- used to enable autocompletion (assign to every lsp server config)
@@ -186,7 +203,10 @@ return {
 			on_attach = on_attach,
 		})
 
-		lspconfig["gleam"].setup({})
+		lspconfig["gleam"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
 		lspconfig["gopls"].setup({})
 		-- configure Erlang server
 		lspconfig["erlangls"].setup({

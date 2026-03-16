@@ -32,16 +32,6 @@ return {
 
 		-- to setup format on save
 		local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-
-		local gleam_source = {
-			generator = {
-				fn = function(parameter)
-					return nil
-				end,
-			},
-			filetypes = { "gleam" },
-			method = null_ls.methods.FORMATTING,
-		}
 		-- configure null_ls
 		null_ls.setup({
 			-- add package.json as identifier for root (for typescript monorepos)
@@ -58,7 +48,6 @@ return {
 				formatting.black,
 				formatting.clang_format,
 				formatting.ocamlformat,
-				gleam_source,
 				formatting.mix,
 				formatting.shfmt,
 			},
@@ -72,8 +61,8 @@ return {
 						callback = function()
 							vim.lsp.buf.format({
 								filter = function(client)
-									--  only use null-ls for formatting instead of lsp server
-									return client.name == "null-ls" or client.name == "gleam"
+									-- only use none-ls for formatting managed here
+									return client.name == "null-ls"
 								end,
 								bufnr = bufnr,
 							})
