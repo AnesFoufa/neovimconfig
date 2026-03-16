@@ -10,4 +10,11 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 	})
 end
 vim.opt.rtp:prepend(lazypath)
-require("lazy").setup({ { import = "foufa.plugins" }, { import = "foufa.plugins.lsp" } })
+require("lazy").setup({
+	{ import = "foufa.plugins" },
+	{ import = "foufa.plugins.lsp" },
+}, {
+	rocks = {
+		enabled = false,
+	},
+})
