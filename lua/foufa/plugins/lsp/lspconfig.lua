@@ -87,6 +87,23 @@ return {
 				})
 			end
 
+			if client.name == "gopls" and client:supports_method("textDocument/formatting") then
+				local augroup = vim.api.nvim_create_augroup("GoLspFormatting", {})
+				vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
+				vim.api.nvim_create_autocmd("BufWritePre", {
+					group = augroup,
+					buffer = bufnr,
+					callback = function()
+						vim.lsp.buf.format({
+							bufnr = bufnr,
+							filter = function(format_client)
+								return format_client.name == "gopls"
+							end,
+						})
+					end,
+				})
+			end
+
 			if client.name == "gleam" and client:supports_method("textDocument/formatting") then
 				local augroup = vim.api.nvim_create_augroup("GleamLspFormatting", {})
 				vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
@@ -207,14 +224,19 @@ return {
 			capabilities = capabilities,
 			on_attach = on_attach,
 		})
-		lspconfig["gopls"].setup({})
+		lspconfig["gopls"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
 		-- configure Erlang server
 		lspconfig["erlangls"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 		})
-		lspconfig["lexical"].setup({
-			cmd = { "/home/anesfoufa/.local/share/nvim/mason/packages/lexical/libexec/lexical/bin/start_lexical.sh" },
+		lspconfig["elixirls"].setup({
+			cmd = { vim.fn.stdpath("data") .. "/mason/packages/elixir-ls/language_server.sh" },
+			capabilities = capabilities,
+			on_attach = on_attach,
 			root_dir = function(fname)
 				return lspconfig.util.root_pattern("mix.exs", ".git")(fname) or (vim.uv or vim.loop).cwd()
 			end,
@@ -222,7 +244,9 @@ return {
 			-- optional settings
 			settings = {},
 		})
-		lspconfig["bashls"].setup({})
-		lspconfig["erlangls"].setup({})
+		lspconfig["bashls"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
 	end,
 }

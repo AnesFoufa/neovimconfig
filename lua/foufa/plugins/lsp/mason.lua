@@ -38,8 +38,9 @@ return {
 				"ocamllsp",
 				"hls",
 				"rust_analyzer",
+				"gopls",
 				"bashls",
-				"lexical",
+				"elixirls",
 				"erlangls",
 			},
 			-- auto-install configured servers (with lspconfig)
