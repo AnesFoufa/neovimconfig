@@ -2,3 +2,4 @@
 lazyvim.json
 lua/plugins/
 plugin/
+.nvimlog
