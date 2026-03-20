@@ -6,9 +6,6 @@ return {
 		{ "antosha417/nvim-lsp-file-operations", config = true },
 	},
 	config = function()
-		-- import lspconfig plugin
-		local lspconfig = require("lspconfig")
-
 		-- import cmp-nvim-lsp plugin
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
@@ -76,60 +73,45 @@ return {
 
 		-- used to enable autocompletion (assign to every lsp server config)
 		local capabilities = cmp_nvim_lsp.default_capabilities()
+		local default_config = {
+			capabilities = capabilities,
+			on_attach = on_attach,
+		}
+
+		local function configure(server, config)
+			vim.lsp.config(server, vim.tbl_deep_extend("force", default_config, config or {}))
+			vim.lsp.enable(server)
+		end
 
 		-- Change the Diagnostic symbols in the sign column (gutter)
 		-- (not in youtube nvim video)
 
 		-- configure html server
-		lspconfig["html"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
+		configure("html")
 
 		-- configure typescript server with plugin
-		lspconfig["ts_ls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
+		configure("ts_ls")
 
 		-- configure css server
-		lspconfig["cssls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
+		configure("cssls")
 
 		-- configure emmet language server
-		lspconfig["emmet_ls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
+		configure("emmet_ls", {
 			filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
 		})
 
 		-- configure python server
-		lspconfig["pyright"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
+		configure("pyright")
 
-		lspconfig["bashls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
+		configure("bashls", {
 			filetypes = { "sh", "bash", "zsh" },
 		})
 
-		lspconfig["sqlls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
+		configure("sqlls")
 
-		lspconfig["dockerls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
+		configure("dockerls")
 
-		lspconfig["yamlls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
+		configure("yamlls", {
 			settings = {
 				yaml = {
 					schemas = {
@@ -146,9 +128,7 @@ return {
 			},
 		})
 
-		lspconfig["helm_ls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
+		configure("helm_ls", {
 			filetypes = { "helm" },
 			settings = {
 				["helm-ls"] = {
@@ -160,9 +140,7 @@ return {
 		})
 
 		-- configure lua server (with special settings)
-		lspconfig["lua_ls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
+		configure("lua_ls", {
 			settings = { -- custom settings for lua
 				Lua = {
 					-- make the language server recognize "vim" global
