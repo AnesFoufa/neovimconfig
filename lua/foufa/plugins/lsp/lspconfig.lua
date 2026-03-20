@@ -72,54 +72,6 @@ return {
 					buffer = bufnr,
 				})
 			end
-			-- Use LSP formatter for rust
-			if client.name == "rust_analyzer" then
-				local augroup = vim.api.nvim_create_augroup("LspFormatting", {})
-				vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-				vim.api.nvim_create_autocmd("BufWritePre", {
-					group = augroup,
-					buffer = bufnr,
-					callback = function()
-						vim.lsp.buf.format({
-							bufnr = bufnr,
-						})
-					end,
-				})
-			end
-
-			if client.name == "gopls" and client:supports_method("textDocument/formatting") then
-				local augroup = vim.api.nvim_create_augroup("GoLspFormatting", {})
-				vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-				vim.api.nvim_create_autocmd("BufWritePre", {
-					group = augroup,
-					buffer = bufnr,
-					callback = function()
-						vim.lsp.buf.format({
-							bufnr = bufnr,
-							filter = function(format_client)
-								return format_client.name == "gopls"
-							end,
-						})
-					end,
-				})
-			end
-
-			if client.name == "gleam" and client:supports_method("textDocument/formatting") then
-				local augroup = vim.api.nvim_create_augroup("GleamLspFormatting", {})
-				vim.api.nvim_clear_autocmds({ group = augroup, buffer = bufnr })
-				vim.api.nvim_create_autocmd("BufWritePre", {
-					group = augroup,
-					buffer = bufnr,
-					callback = function()
-						vim.lsp.buf.format({
-							bufnr = bufnr,
-							filter = function(format_client)
-								return format_client.name == "gleam"
-							end,
-						})
-					end,
-				})
-			end
 		end
 
 		-- used to enable autocompletion (assign to every lsp server config)
@@ -146,32 +98,15 @@ return {
 			on_attach = on_attach,
 		})
 
-		-- configure tailwindcss server
-		lspconfig["tailwindcss"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-		-- configure graphql language server
-		lspconfig["graphql"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-			filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
-		})
-
 		-- configure emmet language server
 		lspconfig["emmet_ls"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
-			filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
+			filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
 		})
 
 		-- configure python server
 		lspconfig["pyright"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-
-		lspconfig["clangd"].setup({
 			capabilities = capabilities,
 			on_attach = on_attach,
 		})
@@ -195,58 +130,6 @@ return {
 					},
 				},
 			},
-		})
-		lspconfig.ocamllsp.setup({
-			command = { "ocamllsp" },
-			filetypes = { "ocaml", "ocaml.menhir", "ocaml.interface", "ocaml.ocamllex", "reason", "dune" },
-			root_dir = lspconfig.util.root_pattern(
-				"*.opam",
-				"esy.json",
-				"package.json",
-				".git",
-				"dune-project",
-				"dune-workspace"
-			),
-			on_attach = on_attach,
-			capabilities = capabilities,
-		})
-		lspconfig["hls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-
-		lspconfig["rust_analyzer"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-
-		lspconfig["gleam"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-		lspconfig["gopls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-		-- configure Erlang server
-		lspconfig["erlangls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-		lspconfig["elixirls"].setup({
-			cmd = { vim.fn.stdpath("data") .. "/mason/packages/elixir-ls/language_server.sh" },
-			capabilities = capabilities,
-			on_attach = on_attach,
-			root_dir = function(fname)
-				return lspconfig.util.root_pattern("mix.exs", ".git")(fname) or (vim.uv or vim.loop).cwd()
-			end,
-			filetypes = { "elixir", "eelixir", "heex" },
-			-- optional settings
-			settings = {},
-		})
-		lspconfig["bashls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
 		})
 	end,
 }

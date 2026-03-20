@@ -17,13 +17,9 @@ return {
 				"prettier", -- prettier formatter
 				"stylua", -- lua formatter
 				"black", -- python formatter
+				"isort", -- python import sorter
 				"eslint_d", -- js linter
 				"htmlbeautifier", --html formatter
-				"clang-format", -- "C formatter"
-				"ocamlformat", -- ocaml formatter
-				"ast_grep",
-				"rust_analyzer",
-				"shfmt",
 			},
 		})
 
@@ -41,15 +37,21 @@ return {
 				--  to disable file types use
 				--  "formatting.prettier.with({disabled_filetypes: {}})" (see null-ls docs)
 				formatting.prettier.with({
-					extra_filetypes = { "svelte" },
+					filetypes = {
+						"css",
+						"html",
+						"javascript",
+						"javascriptreact",
+						"json",
+						"jsonc",
+						"markdown",
+						"typescript",
+						"typescriptreact",
+					},
 				}), -- js/ts formatter
 				formatting.stylua, -- lua formatter
 				formatting.isort,
 				formatting.black,
-				formatting.clang_format,
-				formatting.ocamlformat,
-				formatting.mix,
-				formatting.shfmt,
 			},
 			-- configure format on save
 			on_attach = function(current_client, bufnr)

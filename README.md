@@ -1,13 +1,13 @@
 # Neovim Configuration
 
-A personal Neovim configuration for polyglot development with LSP, Treesitter, Telescope, Mason, and language-specific tooling for web, systems, and functional languages.
+A Neovim configuration tailored for professional Python and web development with LSP, Treesitter, Telescope, Mason, and a reduced language footprint.
 
 ## Features
 
-- **Multi-language Support**: TypeScript/JavaScript, Python, Rust, Go, Haskell, OCaml, Elixir, C/C++, and more
+- **Focused Language Support**: JavaScript/TypeScript, Python, HTML, and CSS
 - **Intelligent Autocompletion**: LSP-powered completion with snippets and multiple sources
 - **Advanced Search**: Fuzzy file finding and live grep with Telescope
-- **Modern Syntax Highlighting**: Tree-sitter based parsing for 25+ languages
+- **Modern Syntax Highlighting**: Tree-sitter based parsing for the included Python and web stack
 - **Professional File Management**: Feature-rich file explorer with Git integration
 - **Code Navigation**: LSP-integrated go-to-definition, references, and diagnostics
 - **Automatic Tool Management**: Mason handles LSP server installation and updates
@@ -24,7 +24,7 @@ Optional but useful:
 
 - **fd**: improves Telescope file-finding
 - **shellcheck**: enables better Bash diagnostics
-- language runtimes/toolchains required by your LSPs, for example Go for `gopls`, Erlang/Rebar for `erlangls`, and Elixir for `elixirls`
+- Python tooling for your preferred formatter/linter workflow
 
 ## Installation
 
@@ -67,10 +67,8 @@ Optional but useful:
 │       ├── nvim-tree.lua            # File explorer
 │       ├── nvim-treesitter.lua      # Syntax highlighting
 │       ├── diagflow.nvim            # Diagnostic display
-│       ├── haskell-tools.lua        # Haskell support
 │       ├── markdown-preview.lua     # Markdown preview
 │       ├── plenary.lua              # Lua utilities
-│       ├── sclametals.lua           # Scala metals
 │       └── lsp/
 │           ├── lspconfig.lua        # LSP server configurations
 │           ├── mason.lua            # LSP installer
@@ -122,40 +120,24 @@ Optional but useful:
 ## Language Support
 
 ### Web Development
-- **TypeScript/JavaScript**: Full LSP support with ts_ls
+- **JavaScript/TypeScript**: Full LSP support with `ts_ls`
 - **HTML/CSS**: Complete markup and styling support
-- **TailwindCSS**: Utility-first CSS framework support
-- **GraphQL**: Schema and query support
 - **Emmet**: HTML/CSS abbreviation expansion
 
-### Systems Programming
-- **Rust**: Complete development environment with rust-analyzer
-- **C/C++**: Modern C/C++ support via clangd
-- **Go**: Full Go development support
+### Python
+- **Python**: LSP support with `pyright`, formatting with `black`, and import sorting with `isort`
 
-### Functional Programming
-- **Haskell**: Advanced tooling via haskell-tools.nvim
-- **OCaml**: Native OCaml development support
-- **Elixir**: Full support via `elixirls`
-- **Gleam**: LSP support with format-on-save via Gleam
-- **Erlang**: LSP support via `erlangls`
-
-### Scripting & Others
-- **Python**: Complete Python development with pyright
-- **Lua**: Enhanced Lua support for Neovim configuration
-- **Bash**: Shell scripting support
-- **Prisma**: Database schema support
+### Config Maintenance
+- **Lua**: Minimal editor-config support for maintaining this Neovim setup itself
 
 ## Formatting
 
-- Go files format on save through `gopls`
-- Gleam files format on save through the Gleam LSP
-- `none-ls` handles configured external formatters such as `stylua`, `black`, `prettier`, `clang-format`, `ocamlformat`, `mix`, and `shfmt`
+- `none-ls` handles configured external formatters such as `stylua`, `black`, `isort`, and `prettier`
 
 ## Notes
 
 - LSP keymaps are attached buffer-locally when a server connects, so commands like `<leader>ca` and `<leader>rn` require an active LSP client in the current buffer.
-- Elixir is configured through Mason-managed `elixirls`, launched from Neovim's data directory.
+- This branch intentionally removes language tooling outside Python and the core web stack.
 
 ## Customization
 
@@ -216,4 +198,4 @@ This is a personal configuration, but feel free to fork and adapt it to your nee
 
 ---
 
-*This configuration is optimized for modern development workflows with a focus on language diversity and developer experience.*
+*This configuration is optimized for Python and web development with a deliberately smaller tooling surface.*
