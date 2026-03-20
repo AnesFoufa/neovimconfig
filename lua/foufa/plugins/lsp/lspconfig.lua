@@ -6,9 +6,6 @@ return {
 		{ "antosha417/nvim-lsp-file-operations", config = true },
 	},
 	config = function()
-		-- import lspconfig plugin
-		local lspconfig = require("lspconfig")
-
 		-- import cmp-nvim-lsp plugin
 		local cmp_nvim_lsp = require("cmp_nvim_lsp")
 
@@ -124,62 +121,47 @@ return {
 
 		-- used to enable autocompletion (assign to every lsp server config)
 		local capabilities = cmp_nvim_lsp.default_capabilities()
+		local default_config = {
+			capabilities = capabilities,
+			on_attach = on_attach,
+		}
+
+		local function configure(server, config)
+			vim.lsp.config(server, vim.tbl_deep_extend("force", default_config, config or {}))
+			vim.lsp.enable(server)
+		end
 
 		-- Change the Diagnostic symbols in the sign column (gutter)
 		-- (not in youtube nvim video)
 
 		-- configure html server
-		lspconfig["html"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
+		configure("html")
 
 		-- configure typescript server with plugin
-		lspconfig["ts_ls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
+		configure("ts_ls")
 
 		-- configure css server
-		lspconfig["cssls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
+		configure("cssls")
 
 		-- configure tailwindcss server
-		lspconfig["tailwindcss"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
+		configure("tailwindcss")
 		-- configure graphql language server
-		lspconfig["graphql"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
+		configure("graphql", {
 			filetypes = { "graphql", "gql", "svelte", "typescriptreact", "javascriptreact" },
 		})
 
 		-- configure emmet language server
-		lspconfig["emmet_ls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
+		configure("emmet_ls", {
 			filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less", "svelte" },
 		})
 
 		-- configure python server
-		lspconfig["pyright"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
+		configure("pyright")
 
-		lspconfig["clangd"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
+		configure("clangd")
 
 		-- configure lua server (with special settings)
-		lspconfig["lua_ls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
+		configure("lua_ls", {
 			settings = { -- custom settings for lua
 				Lua = {
 					-- make the language server recognize "vim" global
@@ -196,57 +178,37 @@ return {
 				},
 			},
 		})
-		lspconfig.ocamllsp.setup({
+		configure("ocamllsp", {
 			command = { "ocamllsp" },
 			filetypes = { "ocaml", "ocaml.menhir", "ocaml.interface", "ocaml.ocamllex", "reason", "dune" },
-			root_dir = lspconfig.util.root_pattern(
-				"*.opam",
-				"esy.json",
-				"package.json",
-				".git",
-				"dune-project",
-				"dune-workspace"
-			),
-			on_attach = on_attach,
-			capabilities = capabilities,
-		})
-		lspconfig["hls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-
-		lspconfig["rust_analyzer"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-
-		lspconfig["gleam"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-		lspconfig["gopls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-		-- configure Erlang server
-		lspconfig["erlangls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
-		lspconfig["elixirls"].setup({
-			cmd = { vim.fn.stdpath("data") .. "/mason/packages/elixir-ls/language_server.sh" },
-			capabilities = capabilities,
-			on_attach = on_attach,
 			root_dir = function(fname)
-				return lspconfig.util.root_pattern("mix.exs", ".git")(fname) or (vim.uv or vim.loop).cwd()
+				return vim.fs.root(fname, {
+					"*.opam",
+					"esy.json",
+					"package.json",
+					".git",
+					"dune-project",
+					"dune-workspace",
+				})
+			end,
+		})
+		configure("hls")
+
+		configure("rust_analyzer")
+
+		configure("gleam")
+		configure("gopls")
+		-- configure Erlang server
+		configure("erlangls")
+		configure("elixirls", {
+			cmd = { vim.fn.stdpath("data") .. "/mason/packages/elixir-ls/language_server.sh" },
+			root_dir = function(fname)
+				return vim.fs.root(fname, { "mix.exs", ".git" }) or (vim.uv or vim.loop).cwd()
 			end,
 			filetypes = { "elixir", "eelixir", "heex" },
 			-- optional settings
 			settings = {},
 		})
-		lspconfig["bashls"].setup({
-			capabilities = capabilities,
-			on_attach = on_attach,
-		})
+		configure("bashls")
 	end,
 }
