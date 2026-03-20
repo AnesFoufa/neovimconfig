@@ -1,10 +1,10 @@
 # Neovim Configuration
 
-A Neovim configuration tailored for professional Python, web, shell, SQL, Docker, and Kubernetes work with LSP, Treesitter, Telescope, Mason, and a reduced language footprint.
+A Neovim configuration tailored for professional Python, web, shell, SQL, Docker, Kubernetes, and Helm work with LSP, Treesitter, Telescope, Mason, and a reduced language footprint.
 
 ## Features
 
-- **Focused Language Support**: JavaScript/TypeScript, Python, HTML/CSS, shell, SQL, Docker, and Kubernetes YAML
+- **Focused Language Support**: JavaScript/TypeScript, Python, HTML/CSS, shell, SQL, Docker, Kubernetes YAML, and Helm charts
 - **Intelligent Autocompletion**: LSP-powered completion with snippets and multiple sources
 - **Advanced Search**: Fuzzy file finding and live grep with Telescope
 - **Modern Syntax Highlighting**: Tree-sitter based parsing for the included Python and web stack
@@ -133,6 +133,7 @@ Optional but useful:
 - **SQL**: Query and schema editing support via `sqlls`
 - **Docker**: Dockerfile support via `dockerls`
 - **Kubernetes**: YAML support via `yamlls` with Kubernetes manifest schema matching
+- **Helm**: Chart template support via `helm_ls`, `helm-ls.nvim`, and Tree-sitter Helm parsing
 
 ### Config Maintenance
 - **Lua**: Minimal editor-config support for maintaining this Neovim setup itself

@@ -146,6 +146,19 @@ return {
 			},
 		})
 
+		lspconfig["helm_ls"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+			filetypes = { "helm" },
+			settings = {
+				["helm-ls"] = {
+					yamlls = {
+						path = "yaml-language-server",
+					},
+				},
+			},
+		})
+
 		-- configure lua server (with special settings)
 		lspconfig["lua_ls"].setup({
 			capabilities = capabilities,

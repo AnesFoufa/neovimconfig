@@ -54,6 +54,7 @@ return {
 			"css",
 			"dockerfile",
 			"diff",
+			"helm",
 			"html",
 			"javascript",
 			"jsdoc",

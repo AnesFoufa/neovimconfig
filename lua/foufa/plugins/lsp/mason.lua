@@ -32,6 +32,7 @@ return {
 				"sqlls",
 				"dockerls",
 				"yamlls",
+				"helm_ls",
 				"lua_ls",
 				"emmet_ls",
 				"pyright",
