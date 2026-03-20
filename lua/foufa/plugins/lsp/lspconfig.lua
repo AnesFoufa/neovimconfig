@@ -111,6 +111,41 @@ return {
 			on_attach = on_attach,
 		})
 
+		lspconfig["bashls"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+			filetypes = { "sh", "bash", "zsh" },
+		})
+
+		lspconfig["sqlls"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+
+		lspconfig["dockerls"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+		})
+
+		lspconfig["yamlls"].setup({
+			capabilities = capabilities,
+			on_attach = on_attach,
+			settings = {
+				yaml = {
+					schemas = {
+						kubernetes = {
+							"*.k8s.yaml",
+							"*.k8s.yml",
+							"k8s/*.yaml",
+							"k8s/*.yml",
+							"manifests/*.yaml",
+							"manifests/*.yml",
+						},
+					},
+				},
+			},
+		})
+
 		-- configure lua server (with special settings)
 		lspconfig["lua_ls"].setup({
 			capabilities = capabilities,

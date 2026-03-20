@@ -1,10 +1,10 @@
 # Neovim Configuration
 
-A Neovim configuration tailored for professional Python and web development with LSP, Treesitter, Telescope, Mason, and a reduced language footprint.
+A Neovim configuration tailored for professional Python, web, shell, SQL, Docker, and Kubernetes work with LSP, Treesitter, Telescope, Mason, and a reduced language footprint.
 
 ## Features
 
-- **Focused Language Support**: JavaScript/TypeScript, Python, HTML, and CSS
+- **Focused Language Support**: JavaScript/TypeScript, Python, HTML/CSS, shell, SQL, Docker, and Kubernetes YAML
 - **Intelligent Autocompletion**: LSP-powered completion with snippets and multiple sources
 - **Advanced Search**: Fuzzy file finding and live grep with Telescope
 - **Modern Syntax Highlighting**: Tree-sitter based parsing for the included Python and web stack
@@ -25,6 +25,7 @@ Optional but useful:
 - **fd**: improves Telescope file-finding
 - **shellcheck**: enables better Bash diagnostics
 - Python tooling for your preferred formatter/linter workflow
+- Shell tooling if you want `bashls`, `shellcheck`, and `shfmt` to run successfully
 
 ## Installation
 
@@ -127,12 +128,18 @@ Optional but useful:
 ### Python
 - **Python**: LSP support with `pyright`, formatting with `black`, and import sorting with `isort`
 
+### Infrastructure And Shell
+- **Bash/Zsh**: Shell support via `bashls`, `shellcheck`, and `shfmt`
+- **SQL**: Query and schema editing support via `sqlls`
+- **Docker**: Dockerfile support via `dockerls`
+- **Kubernetes**: YAML support via `yamlls` with Kubernetes manifest schema matching
+
 ### Config Maintenance
 - **Lua**: Minimal editor-config support for maintaining this Neovim setup itself
 
 ## Formatting
 
-- `none-ls` handles configured external formatters such as `stylua`, `black`, `isort`, and `prettier`
+- `none-ls` handles configured external formatters such as `stylua`, `black`, `isort`, `prettier`, and `shfmt`
 
 ## Notes
 

@@ -20,6 +20,8 @@ return {
 				"isort", -- python import sorter
 				"eslint_d", -- js linter
 				"htmlbeautifier", --html formatter
+				"shellcheck", -- shell linter
+				"shfmt", -- shell formatter
 			},
 		})
 
@@ -52,6 +54,7 @@ return {
 				formatting.stylua, -- lua formatter
 				formatting.isort,
 				formatting.black,
+				formatting.shfmt,
 			},
 			-- configure format on save
 			on_attach = function(current_client, bufnr)

@@ -52,6 +52,7 @@ return {
 		ensure_installed = {
 			"bash",
 			"css",
+			"dockerfile",
 			"diff",
 			"html",
 			"javascript",
@@ -66,6 +67,7 @@ return {
 			"python",
 			"query",
 			"regex",
+			"sql",
 			"toml",
 			"tsx",
 			"typescript",
